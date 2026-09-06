@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#2563eb">
+<title>SI-NILAI SD V8 FINAL — 2026/2027</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:#f1f5f9;color:#172033}
+button,input,select,textarea{font:inherit}button{cursor:pointer}
+.login{min-height:100vh;display:grid;place-items:center;padding:22px;background:linear-gradient(135deg,#dbeafe,#eff6ff 45%,#e0e7ff)}
+.card{background:#fff;border:1px solid #dbe4f0;border-radius:22px;box-shadow:0 18px 50px #0f172a1a}
+.login-card{width:min(430px,100%);padding:28px}
+.logo{width:72px;height:72px;border-radius:20px;display:grid;place-items:center;background:#2563eb;color:white;font-weight:900;font-size:24px;margin:auto}
+h1,h2,h3{margin:0 0 8px}.muted{color:#64748b}.center{text-align:center}
+label{display:block;font-weight:700;font-size:14px;margin:15px 0 7px}
+input,select,textarea{width:100%;padding:12px 13px;border:1px solid #cbd5e1;border-radius:12px;outline:none;background:#fff}
+input:focus,select:focus,textarea:focus{border-color:#2563eb;box-shadow:0 0 0 3px #2563eb18}
+.btn{border:0;border-radius:12px;padding:11px 15px;font-weight:800}.primary{background:#2563eb;color:#fff}.secondary{background:#e2e8f0;color:#172033}.danger{background:#dc2626;color:#fff}.success{background:#16a34a;color:#fff}.wide{width:100%;margin-top:18px}
+.password{position:relative}.password input{padding-right:70px}.toggle{position:absolute;right:7px;top:6px;padding:7px 9px;border:0;background:transparent;color:#475569}
+.demo{margin-top:14px;padding:10px;border-radius:12px;background:#eff6ff;font-size:13px}
+.app{display:none;min-height:100vh}.top{height:64px;background:#fff;border-bottom:1px solid #e2e8f0;display:flex;align-items:center;justify-content:space-between;padding:0 16px;position:sticky;top:0;z-index:5}.brand{font-weight:900;color:#1d4ed8}.top-right{display:flex;gap:8px;align-items:center}
+.layout{display:flex;min-height:calc(100vh - 64px)}.side{width:250px;background:#0f172a;color:#fff;padding:14px;flex:none}.navbtn{width:100%;text-align:left;background:transparent;color:#cbd5e1;border:0;padding:11px 12px;border-radius:10px;margin:2px 0;font-weight:700}.navbtn:hover,.navbtn.active{background:#1e3a8a;color:#fff}.main{padding:20px;flex:1;min-width:0}.page{display:none}.page.active{display:block}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}.stat{padding:18px}.stat b{display:block;font-size:27px}.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}.panel{padding:18px;margin-bottom:15px}.tablewrap{overflow:auto}.table{width:100%;border-collapse:collapse;min-width:700px}.table th,.table td{padding:10px;border-bottom:1px solid #e2e8f0;text-align:left;vertical-align:top}.table th{background:#f8fafc}.badge{display:inline-block;padding:4px 8px;border-radius:999px;background:#dbeafe;color:#1d4ed8;font-size:12px;font-weight:800}
+.alert{padding:11px 13px;border-radius:12px;margin-top:10px;background:#fef2f2;color:#991b1b;display:none}.successbox{background:#f0fdf4;color:#166534}.menu-mobile{display:none}
+@media(max-width:850px){.side{display:none}.menu-mobile{display:inline-block}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.main{padding:13px}.top{height:60px}.side.open{display:block;position:fixed;z-index:10;top:60px;left:0;bottom:0;width:260px;box-shadow:10px 0 30px #0005}}
+@media(max-width:520px){.grid{grid-template-columns:1fr}.login-card{padding:22px}.top-right .user{display:none}}
+</style>
+</head>
+<body>
+<section id="loginScreen" class="login">
+  <div class="card login-card">
+    <div class="logo">SN</div>
+    <div class="center" style="margin-top:16px">
+      <h1>SI-NILAI SD</h1><div class="muted">Sistem Penilaian Sekolah Dasar</div>
+      <div class="badge" style="margin-top:10px">TA 2026/2027 • V8 FINAL</div>
+    </div>
+    <form id="loginForm">
+      <label>Username</label><input id="loginUser" autocomplete="username" required placeholder="Masukkan username">
+      <label>Password</label>
+      <div class="password"><input id="loginPass" type="password" autocomplete="current-password" required placeholder="Masukkan password"><button class="toggle" type="button" id="showPass">Lihat</button></div>
+      <button class="btn primary wide" type="submit">MASUK KE SISTEM</button>
+      <div id="loginError" class="alert">Username atau password salah.</div>
+    </form>
+    <div class="demo"><b>Akun awal:</b> guru / 123456<br><span class="muted">Akun guru dapat dikelola dari menu Database Guru.</span></div>
+  </div>
+</section>
+
+<section id="app" class="app">
+<header class="top">
+  <div style="display:flex;gap:10px;align-items:center"><button id="menuBtn" class="btn secondary menu-mobile">☰</button><div class="brand">📘 SI-NILAI SD V8</div></div>
+  <div class="top-right"><span class="user" id="userLabel"></span><button id="logoutBtn" class="btn danger">Logout</button></div>
+</header>
+<div class="layout">
+<aside id="sidebar" class="side"></aside>
+<main class="main">
+  <section id="dashboard" class="page active">
+    <h2>Dashboard</h2><p class="muted">Selamat datang di SI-NILAI SD. Semua data tersimpan di browser perangkat ini.</p>
+    <div class="grid">
+      <div class="card stat"><span class="muted">Siswa</span><b id="statStudents">0</b></div>
+      <div class="card stat"><span class="muted">Nilai</span><b id="statScores">0</b></div>
+      <div class="card stat"><span class="muted">Guru</span><b id="statTeachers">1</b></div>
+      <div class="card stat"><span class="muted">Tahun</span><b>2026/27</b></div>
+    </div>
+    <div class="card panel" style="margin-top:15px"><h3>Alur kerja</h3><p>1. Isi/import siswa → 2. Lengkapi CP/TP/ATP → 3. Susun Prota/Prosem/RPM → 4. Input penilaian per BAB → 5. Cetak/lihat rapor → 6. Backup data.</p></div>
+  </section>
+
+  <section id="students" class="page">
+    <h2>Data Siswa</h2><p class="muted">Tambah siswa secara manual. Data dapat dibackup dan dipulihkan.</p>
+    <div class="card panel">
+      <div class="grid" style="grid-template-columns:2fr 1fr 1fr 1fr"><input id="sName" placeholder="Nama siswa"><input id="sNis" placeholder="NIS"><select id="sClass"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select><input id="sAbsen" placeholder="No. absen"></div>
+      <button class="btn primary" style="margin-top:10px" id="addStudent">+ Tambah Siswa</button>
+    </div>
+    <div class="card panel tablewrap"><table class="table"><thead><tr><th>No</th><th>Nama</th><th>NIS</th><th>Kelas</th><th>Absen</th><th>Aksi</th></tr></thead><tbody id="studentTable"></tbody></table></div>
+  </section>
+
+  <section id="import" class="page">
+    <h2>Import Data Siswa</h2><p class="muted">Gunakan CSV sederhana: nama,nis,kelas,absen. Baris pertama boleh berupa judul kolom.</p>
+    <div class="card panel"><input type="file" id="csvFile" accept=".csv,text/csv"><button class="btn primary" id="importCsv" style="margin-top:10px">Import CSV</button><div id="importMsg" class="alert"></div></div>
+  </section>
+
+  <section id="cp" class="page"><h2>CP — Capaian Pembelajaran</h2><div class="card panel"><textarea id="cpText" rows="10" placeholder="Tulis atau tempel CP per mata pelajaran/fase..."></textarea><button class="btn primary" id="saveCp">Simpan CP</button></div></section>
+  <section id="tp" class="page"><h2>TP — Tujuan Pembelajaran</h2><div class="card panel"><textarea id="tpText" rows="10" placeholder="Tulis TP yang diturunkan dari CP..."></textarea><button class="btn primary" id="saveTp">Simpan TP</button></div></section>
+  <section id="atp" class="page"><h2>ATP — Alur Tujuan Pembelajaran</h2><div class="card panel"><textarea id="atpText" rows="10" placeholder="Susun alur tujuan pembelajaran..."></textarea><button class="btn primary" id="saveAtp">Simpan ATP</button></div></section>
+  <section id="prota" class="page"><h2>Prota — Program Tahunan</h2><div class="card panel"><textarea id="protaText" rows="10" placeholder="Program tahunan..."></textarea><button class="btn primary" id="saveProta">Simpan Prota</button></div></section>
+  <section id="prosem" class="page"><h2>Prosem — Program Semester</h2><div class="card panel"><textarea id="prosemText" rows="10" placeholder="Program semester..."></textarea><button class="btn primary" id="saveProsem">Simpan Prosem</button></div></section>
+
+  <section id="rpm" class="page"><h2>RPM Deep Learning</h2><p class="muted">Rencana Pembelajaran Mendalam. Nama BAB ditampilkan dari daftar referensi yang tersedia; jangan mengarang judul buku yang belum diverifikasi.</p><div class="card panel"><select id="rpmMapel"></select><select id="rpmKelas" style="margin-top:10px"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select><div id="rpmBab" style="margin-top:12px"></div><textarea id="rpmText" rows="8" style="margin-top:12px" placeholder="Tujuan, kegiatan, asesmen, diferensiasi, refleksi..."></textarea><button class="btn primary" id="saveRpm">Simpan RPM</button></div></section>
+
+  <section id="scores" class="page">
+    <h2>Penilaian Per BAB</h2><p class="muted">Nilai dapat diinput per siswa dan per BAB/Unit. STS tidak digunakan.</p>
+    <div class="card panel">
+      <select id="scoreMapel"></select><select id="scoreKelas" style="margin-top:8px"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select><select id="scoreBab" style="margin-top:8px"></select>
+      <div class="tablewrap" style="margin-top:12px"><table class="table"><thead><tr><th>Nama</th><th>Nilai</th><th>Catatan</th></tr></thead><tbody id="scoreTable"></tbody></table></div>
+      <button class="btn success" id="saveScores">Simpan Nilai</button>
+    </div>
+  </section>
+
+  <section id="report" class="page"><h2>Rapor</h2><p class="muted">Rekap sederhana dari nilai yang tersimpan. Pilih siswa untuk melihat rata-rata.</p><div class="card panel"><select id="reportStudent"></select><div id="reportResult" style="margin-top:15px"></div></div></section>
+
+  <section id="teachers" class="page"><h2>Database Guru</h2><p class="muted">Database lokal perangkat. Untuk login multi-perangkat/terpusat diperlukan backend + PostgreSQL.</p><div class="card panel"><input id="tUser" placeholder="Username guru"><input id="tName" placeholder="Nama guru" style="margin-top:8px"><input id="tPass" placeholder="Password" style="margin-top:8px"><button class="btn primary" id="addTeacher" style="margin-top:10px">+ Tambah Guru</button></div><div class="card panel tablewrap"><table class="table"><thead><tr><th>Username</th><th>Nama</th><th>Aksi</th></tr></thead><tbody id="teacherTable"></tbody></table></div></section>
+
+  <section id="reference" class="page"><h2>Referensi SIBI</h2><div class="card panel"><p>Gunakan katalog resmi SIBI untuk memeriksa buku dan edisi terbaru.</p><p><a href="https://buku.kemendikdasmen.go.id/katalog" target="_blank" rel="noopener">Buka Katalog Buku SIBI</a></p><p><a href="https://kurikulum.kemendikdasmen.go.id/panduan-mapel" target="_blank" rel="noopener">Panduan Mata Pelajaran</a></p><div id="babReference"></div></div></section>
+
+  <section id="backup" class="page"><h2>Backup / Restore</h2><div class="card panel"><p>Backup menyimpan data aplikasi lokal sebagai file JSON.</p><button class="btn primary" id="backupBtn">⬇ Backup JSON</button><label style="margin-top:18px">Restore JSON</label><input type="file" id="restoreFile" accept=".json"><button class="btn secondary" id="restoreBtn" style="margin-top:10px">Restore Data</button><div id="backupMsg" class="alert"></div></div></section>
+</main></div>
+</section>
+
+<script>
+(function(){
+'use strict';
+const KEY='si_nilai_sd_v8_2026_2027';
+const MAPEL=['Bahasa Indonesia','Pendidikan Pancasila','Matematika','IPAS','PJOK','Seni Rupa','Seni Musik','Seni Tari','Seni Teater','Bahasa Inggris','Pendidikan Agama dan Budi Pekerti'];
+const BAB={
+'Bahasa Indonesia':{
+1:['Bunyi Apa?','Ayo, Bermain!','Awas Kuman!','Aku Bisa!','Teman Baru','Berbeda Itu Tak Apa','Aku Ingin','Di Sekitar Rumah'],
+2:['Mengenal Perasaan','Menjaga Kesehatan','Berhati-hati di Mana Saja','Keluargaku Unik','Berteman dalam Keragaman','Bijak Memakai Uang','Sayang Lingkungan','Hobi yang Jadi Prestasi'],
+3:['Ayo, Main!','Kawan Seiring','Pengobar Semangat','Senyum di Sekitarku','Bola-Bola Cokelat','Tersesat','Aku dan si Merah'],
+4:['Sudah Besar','Di Bawah Atap','Lihat Sekitar','Meliuk dan Menerjang','Bertukar dan Membayar','Satu Titik','Asal-Usul','Sehatlah Ragaku'],
+5:['Aku yang Unik','Buku Jendela Dunia','Ekspresi Diri melalui Hobi','Belajar Berwirausaha','Menjadi Warga Dunia','Cinta Indonesia','Sayangi Bumi','Bergerak Bersama'],
+6:['Bangga Menjadi Anak Indonesia','Musisi Indonesia di Pentas Dunia','Taman Nasional dan Situs Warisan Dunia','Jeda untuk Iklim','Anak-Anak yang Mengubah Dunia','Liburan Perpisahan Kelas','Aku Bisa Berempati','Aman di Dunia Maya']},
+'IPAS':{4:['Tumbuhan, Sumber Kehidupan di Bumi','Wujud Zat dan Perubahannya','Gaya di Sekitar Kita','Mengubah Bentuk Energi','Cerita Tentang Daerahku','Indonesiaku Kaya Budaya','Bagaimana Mendapatkan Semua Kebutuhan Kita?','Membangun Masyarakat yang Beradab']},
+'Pendidikan Pancasila':{4:['Mengenal Lingkungan Sekitar','Aku Anak yang Disiplin','Kerja Sama di Lingkunganku','Pancasila dalam Diriku']},
+'Matematika':{4:['Bilangan Cacah sampai 10.000','Pecahan','Pola Gambar dan Pola Bilangan','Pengukuran Luas dan Volume','Bangun Datar','Piktogram dan Diagram Batang']}
+};
+let db=load();
+function base(){return {students:[],scores:{},teachers:[{username:'guru',name:'Guru',password:'123456'}],texts:{},rpm:{}}}
+function load(){try{return Object.assign(base(),JSON.parse(localStorage.getItem(KEY)||'{}'))}catch(e){return base()}}
+function save(){localStorage.setItem(KEY,JSON.stringify(db));renderStats()}
+function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+function id(x){return document.getElementById(x)}
+const pages=[['dashboard','Dashboard'],['students','Data Siswa'],['import','Import Data Siswa'],['cp','CP'],['tp','TP'],['atp','ATP'],['prota','Prota'],['prosem','Prosem'],['rpm','RPM Deep Learning'],['scores','Penilaian Per BAB'],['report','Rapor'],['teachers','Database Guru'],['reference','Referensi SIBI'],['backup','Backup / Restore']];
+function buildNav(){id('sidebar').innerHTML='<div style="font-weight:900;padding:8px 12px 12px">MENU UTAMA</div>'+pages.map((p,i)=>'<button class="navbtn '+(i===0?'active':'')+'" data-page="'+p[0]+'">'+p[1]+'</button>').join('');document.querySelectorAll('.navbtn').forEach(b=>b.onclick=()=>showPage(b.dataset.page))}
+function showPage(p){document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));id(p).classList.add('active');document.querySelectorAll('.navbtn').forEach(x=>x.classList.toggle('active',x.dataset.page===p));id('sidebar').classList.remove('open');if(p==='students')renderStudents();if(p==='teachers')renderTeachers();if(p==='scores')renderScores();if(p==='report')renderReport();if(p==='reference')renderReference()}
+function renderStats(){id('statStudents').textContent=db.students.length;id('statScores').textContent=Object.keys(db.scores).length;id('statTeachers').textContent=db.teachers.length}
+function fillMapels(){['rpmMapel','scoreMapel'].forEach(k=>id(k).innerHTML=MAPEL.map(x=>'<option>'+esc(x)+'</option>').join(''));updateBab()}
+function babList(mapel,kelas){return (BAB[mapel]&&BAB[mapel][kelas])||['Unit Pembelajaran 1','Unit Pembelajaran 2','Unit Pembelajaran 3','Unit Pembelajaran 4','Unit Pembelajaran 5']}
+function updateBab(){let m=id('scoreMapel').value,k=id('scoreKelas').value;id('scoreBab').innerHTML=babList(m,k).map((x,i)=>'<option value="'+i+'">'+esc('BAB '+(i+1)+' — '+x)+'</option>').join('');let rm=id('rpmMapel').value,rk=id('rpmKelas').value;id('rpmBab').innerHTML=babList(rm,rk).map((x,i)=>'<span class="badge" style="margin:3px">'+esc('BAB '+(i+1)+' — '+x)+'</span>').join('')}
+function renderStudents(){id('studentTable').innerHTML=db.students.map((s,i)=>'<tr><td>'+(i+1)+'</td><td>'+esc(s.name)+'</td><td>'+esc(s.nis)+'</td><td>'+esc(s.kelas)+'</td><td>'+esc(s.absen)+'</td><td><button class="btn danger" data-del="'+i+'">Hapus</button></td></tr>').join('')||'<tr><td colspan="6" class="muted">Belum ada siswa.</td></tr>';document.querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>{db.students.splice(+b.dataset.del,1);save();renderStudents();renderReport();renderScores()})}
+function renderScores(){let k=id('scoreKelas').value;let ss=db.students.filter(s=>String(s.kelas)===String(k));id('scoreTable').innerHTML=ss.map(s=>{let key=s.nis+'|'+id('scoreMapel').value+'|'+k+'|'+id('scoreBab').value;let v=db.scores[key]||{};return '<tr><td>'+esc(s.name)+'</td><td><input class="scoreInput" data-key="'+esc(key)+'" type="number" min="0" max="100" value="'+esc(v.nilai||'')+'"></td><td><input class="noteInput" data-key="'+esc(key)+'" value="'+esc(v.catatan||'')+'" placeholder="Catatan"></td></tr>'}).join('')||'<tr><td colspan="3" class="muted">Belum ada siswa di kelas ini.</td></tr>'}
+function renderReport(){id('reportStudent').innerHTML='<option value="">Pilih siswa</option>'+db.students.map(s=>'<option value="'+esc(s.nis)+'">'+esc(s.name)+' — Kelas '+esc(s.kelas)+'</option>').join('')}
+function renderTeachers(){id('teacherTable').innerHTML=db.teachers.map((t,i)=>'<tr><td>'+esc(t.username)+'</td><td>'+esc(t.name)+'</td><td>'+(i?'<button class="btn danger" data-tdel="'+i+'">Hapus</button>':'<span class="badge">Akun awal</span>')+'</td></tr>').join('');document.querySelectorAll('[data-tdel]').forEach(b=>b.onclick=()=>{db.teachers.splice(+b.dataset.tdel,1);save();renderTeachers()})}
+function renderReference(){id('babReference').innerHTML='<h3 style="margin-top:20px">BAB yang tersedia di aplikasi</h3><p class="muted">Untuk kombinasi yang belum diverifikasi dari buku SIBI, aplikasi menggunakan label Unit Pembelajaran agar tidak mengarang judul BAB.</p>'+Object.entries(BAB).map(([m,ks])=>'<div style="margin:12px 0"><b>'+esc(m)+'</b>'+Object.entries(ks).map(([k,arr])=>'<div style="margin-top:5px">Kelas '+k+': '+arr.map((x,i)=>'<span class="badge" style="margin:2px">'+esc('BAB '+(i+1)+' — '+x)+'</span>').join('')+'</div>').join('')).join('')}
+id('loginForm').onsubmit=e=>{e.preventDefault();let u=id('loginUser').value.trim(),p=id('loginPass').value;let t=db.teachers.find(x=>x.username===u&&x.password===p);if(!t){id('loginError').style.display='block';return}sessionStorage.setItem('siLogin',u);id('userLabel').textContent=t.name+' ('+t.username+')';id('loginScreen').style.display='none';id('app').style.display='block';id('loginError').style.display='none';renderStats()}
+id('showPass').onclick=()=>{id('loginPass').type=id('loginPass').type==='password'?'text':'password';id('showPass').textContent=id('loginPass').type==='password'?'Lihat':'Sembunyi'}
+id('logoutBtn').onclick=()=>{sessionStorage.removeItem('siLogin');id('app').style.display='none';id('loginScreen').style.display='grid';id('loginPass').value=''}
+id('menuBtn').onclick=()=>id('sidebar').classList.toggle('open')
+id('addStudent').onclick=()=>{let name=id('sName').value.trim();if(!name)return alert('Nama siswa wajib diisi.');db.students.push({name,nis:id('sNis').value.trim()||('S'+Date.now()),kelas:id('sClass').value,absen:id('sAbsen').value.trim()});['sName','sNis','sAbsen'].forEach(x=>id(x).value='');save();renderStudents()}
+id('importCsv').onclick=()=>{let f=id('csvFile').files[0];if(!f)return alert('Pilih file CSV dulu.');let r=new FileReader();r.onload=()=>{let lines=r.result.split(/\r?\n/).filter(x=>x.trim());let count=0;lines.forEach((line,i)=>{let a=line.split(',').map(x=>x.trim().replace(/^"|"$/g,''));if(i===0&&/nama/i.test(a[0]))return;if(a[0]){db.students.push({name:a[0],nis:a[1]||('S'+Date.now()+count),kelas:a[2]||'1',absen:a[3]||''});count++}});save();renderStudents();id('importMsg').textContent=count+' siswa berhasil diimport.';id('importMsg').className='alert successbox';id('importMsg').style.display='block'};r.readAsText(f)}
+;[['cp','cpText'],['tp','tpText'],['atp','atpText'],['prota','protaText'],['prosem','prosemText']].forEach(([k,el])=>id('save'+k[0].toUpperCase()+k.slice(1)).onclick=()=>{db.texts[k]=id(el).value;save();alert(k.toUpperCase()+' tersimpan.')})
+id('saveRpm').onclick=()=>{let key=id('rpmMapel').value+'|'+id('rpmKelas').value+'|'+id('rpmBab').innerText;db.rpm[key]=id('rpmText').value;save();alert('RPM tersimpan.')}
+;['scoreMapel','scoreKelas','rpmMapel','rpmKelas'].forEach(k=>id(k).onchange=()=>{updateBab();if(k.startsWith('score'))renderScores()})
+id('saveScores').onclick=()=>{document.querySelectorAll('.scoreInput').forEach(inp=>{let n=document.querySelector('.noteInput[data-key="'+CSS.escape(inp.dataset.key)+'"]');db.scores[inp.dataset.key]={nilai:inp.value,catatan:n?n.value:''}});save();alert('Nilai berhasil disimpan.')}
+id('reportStudent').onchange=()=>{let nis=id('reportStudent').value;if(!nis){id('reportResult').innerHTML='';return}let rows=Object.entries(db.scores).filter(([k])=>k.startsWith(nis+'|'));let nums=rows.map(x=>Number(x[1].nilai)).filter(Number.isFinite);let avg=nums.length?Math.round(nums.reduce((a,b)=>a+b,0)/nums.length):0;id('reportResult').innerHTML='<div class="card panel"><b>Rata-rata nilai: '+avg+'</b><p class="muted">'+nums.length+' nilai tersimpan.</p></div>'}
+id('addTeacher').onclick=()=>{let u=id('tUser').value.trim(),n=id('tName').value.trim(),p=id('tPass').value;if(!u||!n||!p)return alert('Lengkapi username, nama, password.');if(db.teachers.some(t=>t.username===u))return alert('Username sudah ada.');db.teachers.push({username:u,name:n,password:p});save();['tUser','tName','tPass'].forEach(x=>id(x).value='');renderTeachers()}
+id('backupBtn').onclick=()=>{let blob=new Blob([JSON.stringify(db,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='backup-si-nilai-sd-2026-2027.json';a.click();URL.revokeObjectURL(a.href)}
+id('restoreBtn').onclick=()=>{let f=id('restoreFile').files[0];if(!f)return alert('Pilih file JSON.');let r=new FileReader();r.onload=()=>{try{let x=JSON.parse(r.result);if(!x.students||!x.teachers)throw Error();db=x;save();renderStudents();renderTeachers();alert('Restore berhasil. Silakan login ulang jika diperlukan.')}catch(e){alert('File backup tidak valid.')}};r.readAsText(f)}
+buildNav();fillMapels();renderStats();renderStudents();renderTeachers();
+['cp','tp','atp','prota','prosem'].forEach(k=>{if(db.texts[k])id(k+'Text').value=db.texts[k]});
+if(sessionStorage.getItem('siLogin')){let t=db.teachers.find(x=>x.username===sessionStorage.getItem('siLogin'));if(t){id('loginScreen').style.display='none';id('app').style.display='block';id('userLabel').textContent=t.name+' ('+t.username+')'}}
+})();
+</script>
+</body>
+</html>
